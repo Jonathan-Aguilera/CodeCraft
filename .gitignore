@@ -1,0 +1,27 @@
+# Dependencias
+**/node_modules/
+**/dist/
+**/build/
+**/.vite/
+
+# Variables de entorno (¡NUNCA subir!)
+**/.env
+**/.env.local
+**/.env.*.local
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+**/logs
+**/*.log
+npm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
