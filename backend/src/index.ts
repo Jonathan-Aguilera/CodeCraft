@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import testRoutes from './routes/testRoutes'; // <-- Importación correcta
 
 dotenv.config();
 
@@ -11,12 +12,14 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Ruta de prueba (health check)
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'CodeCraft Backend is running!' });
+// Rutas de prueba (montadas en /api)
+app.use('/api', testRoutes);
+
+// Ruta de bienvenida
+app.get('/', (req, res) => {
+  res.send('CodeCraft Backend is running!');
 });
 
-// Iniciar servidor
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
