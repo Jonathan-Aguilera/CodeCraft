@@ -16,5 +16,5 @@ export interface IProject {
   status: ProjectStatus;
   createdAt: Timestamp | Date;
   recommendedRoles: string[];    // Ej: ["1 Frontend", "1 Backend"]
-  deadline: Timestamp | Date;
+  deadline?: Timestamp | Date;
 }
