@@ -1,21 +1,21 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import testRoutes from './routes/testRoutes'; // <-- Importación correcta
+import testRoutes from './routes/testRoutes';
+import userRoutes from './routes/user.routes';   // <-- AÑADIR
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middlewares
 app.use(cors());
 app.use(express.json());
 
-// Rutas de prueba (montadas en /api)
-app.use('/api', testRoutes);
+// Rutas
+app.use('/api', testRoutes);          // Rutas de prueba (health, test-db)
+app.use('/api/users', userRoutes);    // <-- Rutas de usuarios
 
-// Ruta de bienvenida
 app.get('/', (req, res) => {
   res.send('CodeCraft Backend is running!');
 });
