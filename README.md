@@ -14,40 +14,40 @@ CodeCraft es una plataforma que conecta a desarrolladores con empresas y cliente
 
 ## 📁 Estructura del Proyecto
 
-codecraft/
-├── backend/
-│ ├── src/
-│ │ ├── config/
-│ │ │ └── firebase.ts # Configuración de Firebase Admin
-│ │ ├── models/ # Interfaces TypeScript de las colecciones
-│ │ │ ├── common.types.ts # Tipos compartidos (roles, estados)
-│ │ │ ├── user.model.ts
-│ │ │ ├── developerProfile.model.ts
-│ │ │ ├── project.model.ts
-│ │ │ ├── application.model.ts
-│ │ │ ├── review.model.ts
-│ │ │ └── index.ts
-│ │ ├── services/ # Lógica de negocio
-│ │ │ └── user.service.ts # CRUD de usuarios
-│ │ ├── controllers/ # Manejo de peticiones HTTP
-│ │ │ └── user.controller.ts
-│ │ ├── routes/ # Definición de endpoints
-│ │ │ ├── testRoutes.ts # Rutas de prueba (health, test-db)
-│ │ │ └── user.routes.ts
-│ │ ├── middlewares/ # Middlewares (validación, autenticación)
-│ │ │ └── validation.middleware.ts
-│ │ ├── validators/ # Reglas de validación con express-validator
-│ │ │ └── user.validator.ts
-│ │ ├── utils/ # Helpers (reservado para futuro)
-│ │ ├── scripts/ # Scripts de utilidad
-│ │ │ └── seed.ts # Carga de datos de prueba
-│ │ └── index.ts # Punto de entrada del servidor
-│ ├── .env # Variables de entorno (no subir a GitHub)
-│ ├── package.json
-│ └── tsconfig.json
-├── frontend/ # Próximamente...
-├── .gitignore
-└── README.md
+codecraft/ <br>
+├── backend/ <br>
+│ ├── src/ <br>
+│ │ ├── config/ <br>
+│ │ │ └── firebase.ts # Configuración de Firebase Admin <br>
+│ │ ├── models/ # Interfaces TypeScript de las colecciones <br>
+│ │ │ ├── common.types.ts # Tipos compartidos (roles, estados) <br>
+│ │ │ ├── user.model.ts <br>
+│ │ │ ├── developerProfile.model.ts <br>
+│ │ │ ├── project.model.ts <br>
+│ │ │ ├── application.model.ts <br>
+│ │ │ ├── review.model.ts <br>
+│ │ │ └── index.ts <br>
+│ │ ├── services/ # Lógica de negocio <br>
+│ │ │ └── user.service.ts # CRUD de usuarios <br>
+│ │ ├── controllers/ # Manejo de peticiones HTTP <br>
+│ │ │ └── user.controller.ts <br>
+│ │ ├── routes/ # Definición de endpoints <br>
+│ │ │ ├── testRoutes.ts # Rutas de prueba (health, test-db) <br>
+│ │ │ └── user.routes.ts <br>
+│ │ ├── middlewares/ # Middlewares (validación, autenticación) <br>
+│ │ │ └── validation.middleware.ts <br>
+│ │ ├── validators/ # Reglas de validación con express-validator <br>
+│ │ │ └── user.validator.ts <br>
+│ │ ├── utils/ # Helpers (reservado para futuro) <br>
+│ │ ├── scripts/ # Scripts de utilidad <br>
+│ │ │ └── seed.ts # Carga de datos de prueba <br>
+│ │ └── index.ts # Punto de entrada del servidor <br>
+│ ├── .env # Variables de entorno (no subir a GitHub) <br>
+│ ├── package.json <br>
+│ └── tsconfig.json <br>
+├── frontend/ # Próximamente... <br>
+├── .gitignore <br>
+└── README.md <br>
 
 ---
 
