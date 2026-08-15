@@ -1,59 +1,44 @@
-const API_URL = 'http://localhost:3000/api';
+import axios from 'axios';
 
-// Función para obtener el token actual de Firebase
-const getToken = async (): Promise<string | null> => {
-  const { auth } = await import('../config/firebaseClient');
-  const user = auth.currentUser;
-  if (!user) return null;
-  return await user.getIdToken();
-};
+// URL base de tu backend (ajusta si cambias el puerto)
+const API_BASE_URL = 'http://localhost:3000/api';
 
-// Función genérica para peticiones autenticadas
-export const authenticatedFetch = async (
-  endpoint: string,
-  options: RequestInit = {}
-): Promise<any> => {
-  const token = await getToken();
-  if (!token) throw new Error('No hay token de autenticación');
+// 1. Crear instancia de Axios con configuración base
+export const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
-  const response = await fetch(`${API_URL}${endpoint}`, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-      'Authorization': `Bearer ${token}`,
-    },
-  });
+// 2. Interceptor para añadir el token de autenticación automáticamente
+api.interceptors.request.use(
+  (config) => {
+    // Obtener token del almacenamiento (localStorage o donde guardes)
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
-  return response.json();
-};
+// 3. Interceptor para manejar errores globales (ej. token expirado)
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      // Token expirado o inválido: redirigir al login
+      localStorage.removeItem('authToken');
+      // Aquí podrías redirigir con React Router, pero lo haremos más adelante
+    }
+    return Promise.reject(error);
+  }
+);
 
-// Funciones específicas para autenticación
-export const registerUser = async (userData: {
-  email: string;
-  password: string;
-  displayName?: string;
-  role: string;
-}) => {
-  const response = await fetch(`${API_URL}/auth/register`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(userData),
-  });
-  return response.json();
-};
-
-export const loginUser = async (email: string, password: string) => {
-  // Nota: El login se hace con Firebase Auth directamente en el frontend.
-  // Esta función solo verifica que el usuario existe en Firestore.
-  const response = await fetch(`${API_URL}/auth/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password }),
-  });
-  return response.json();
-};
-
-export const getUserProfile = async () => {
-  return authenticatedFetch('/auth/me');
-};
+// 4. Funciones auxiliares para tipar respuestas (opcional)
+export const get = <T>(url: string) => api.get<T>(url);
+export const post = <T>(url: string, data: any) => api.post<T>(url, data);
+export const put = <T>(url: string, data: any) => api.put<T>(url, data);
+export const del = <T>(url: string) => api.delete<T>(url);
