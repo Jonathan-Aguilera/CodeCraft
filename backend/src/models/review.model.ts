@@ -1,11 +1,14 @@
 import { Timestamp } from 'firebase-admin/firestore';
 
 export interface IReview {
-  // ID autogenerado por Firestore
-  projectId: string;
-  developerUid: string;           // Dev calificado
-  clientUid: string;              // Cliente que escribe la reseña
-  rating: number;                 // 1-5
-  comment?: string;               // Comentario opcional, anónimo
+  projectId?: string;           // Opcional: si es de proyecto
+  targetUid: string;            // Objetivo de la reseña (puede ser dev, cliente, admin)
+  userUid: string;              // Quien escribe la reseña
+  rating: number;               // 0-5 (0 = sin valoración, pero en uso normal 1-5)
+  comment?: string;
   createdAt: Timestamp | Date;
+  updatedAt: Timestamp | Date;
+  isActive: boolean;            // true por defecto
+  isAlerted: boolean;           // true si ha sido reportada (numbAlert >= 1)
+  numbAlert: number;            // contador de reportes (máx 3)
 }

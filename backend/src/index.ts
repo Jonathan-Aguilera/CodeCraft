@@ -6,6 +6,7 @@ import userRoutes from './routes/user.routes';
 import projectRoutes from './routes/project.routes';
 import applicationRoutes from './routes/application.routes';
 import developerProfileRoutes from './routes/developerProfile.routes';
+import reviewRoutes from './routes/review.routes';
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use('/api/users', userRoutes);    // <-- Rutas de usuarios
 app.use('/api/projects', projectRoutes); // <-- Rutas de proyectos
 app.use('/api/applications', applicationRoutes); // <-- Rutas de aplicaciones
 app.use('/api/developer-profiles', developerProfileRoutes); // <-- Rutas de perfiles de desarrolladores
+app.use('/api/reviews', reviewRoutes); // <-- Rutas de reseñas
 app.get('/', (req, res) => {
   res.send('CodeCraft Backend is running!');
 });

@@ -153,3 +153,31 @@ export const deleteDeveloperProfile = async (uid: string): Promise<void> => {
   }
   await db.collection('developerProfiles').doc(uid).delete();
 };
+
+// Recalcular el averageRating de un desarrollador (llamado al crear una reseña)
+export const recalculateAverageRating = async (developerUid: string): Promise<void> => {
+  // Solo contar reseñas activas (isActive == true)
+  const snapshot = await db
+    .collection('reviews')
+    .where('developerUid', '==', developerUid)
+    .where('isActive', '==', true)
+    .get();
+
+
+  if (snapshot.empty) {
+    // Si no hay reseñas, poner rating a 0
+    await db.collection('developerProfiles').doc(developerUid).update({
+      averageRating: 0,
+    });
+    return;
+  }
+
+  const ratings = snapshot.docs.map(doc => doc.data().rating);
+  const average = ratings.reduce((a, b) => a + b, 0) / ratings.length;
+  // Redondear a 1 decimal
+  const rounded = Math.round(average * 10) / 10;
+
+  await db.collection('developerProfiles').doc(developerUid).update({
+    averageRating: rounded,
+  });
+};
