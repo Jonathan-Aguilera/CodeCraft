@@ -1,14 +1,18 @@
+// components/common/Header.tsx
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBars, FaTimes, FaUser, FaSignInAlt } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
 import { Navbar } from './Navbar';
 
-// Definimos los enlaces principales
+// Definimos los enlaces principales (todos visibles por ahora)
 const NAV_LINKS = [
+  { to: '/', label: 'Inicio' },
   { to: '/developers', label: 'Talentos' },
   { to: '/projects', label: 'Proyectos' },
-  { to: '/about', label: 'Sobre Nosotros' },
+  { to: '/dashboard', label: 'Dashboard' },
+  { to: '/login', label: 'Iniciar Sesión' },
+  { to: '/register', label: 'Registrarse' },
 ];
 
 export const Header = () => {

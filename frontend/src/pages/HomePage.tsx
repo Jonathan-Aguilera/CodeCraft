@@ -3,34 +3,30 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
 export const HomePage = () => {
-  // Estado para el test de conexión
-  const [dbStatus, setDbStatus] = useState<string>('Cargando...');
-  const [dbData, setDbData] = useState<any>(null);
+  // Estado para la conexión
+  const [connectionStatus, setConnectionStatus] = useState<string>('Verificando conexión...');
+  const [isConnected, setIsConnected] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const testBackendConnection = async () => {
+    const checkBackendHealth = async () => {
       try {
-        const healthRes = await fetch('http://localhost:3000/api/health');
-        if (!healthRes.ok) throw new Error('Backend no responde');
-        console.log('✅ Backend activo');
-
-        const dbRes = await fetch('http://localhost:3000/api/test-db');
-        const result = await dbRes.json();
-        console.log('📦 Respuesta de Firestore:', result);
-
-        if (result.success) {
-          setDbStatus('✅ Conexión a Firestore exitosa');
-          setDbData(result.data);
+        // Solo verificamos el health check, sin crear documentos
+        const response = await fetch('http://localhost:3000/api/health');
+        if (response.ok) {
+          setConnectionStatus('✅ Conexión con el backend establecida');
+          setIsConnected(true);
         } else {
-          setDbStatus('❌ Error en Firestore: ' + result.message);
+          setConnectionStatus('❌ El backend responde con error');
+          setIsConnected(false);
         }
       } catch (error) {
         console.error('Error al conectar con el backend:', error);
-        setDbStatus('❌ No se pudo conectar con el backend');
+        setConnectionStatus('❌ No se pudo conectar con el backend');
+        setIsConnected(false);
       }
     };
 
-    testBackendConnection();
+    checkBackendHealth();
   }, []);
 
   return (
@@ -71,18 +67,22 @@ export const HomePage = () => {
         </div>
       </div>
 
-      {/* Test de conexión al backend (manteniendo el diseño que ya tenías) */}
+      {/* Estado de la conexión (solo informativo) */}
       <div className="mt-16 w-full max-w-md">
         <div className="rounded-lg bg-[#1E1E1E] p-6 shadow-lg border border-gray-700">
           <h2 className="text-xl font-semibold text-white mb-2">🔌 Estado de la conexión:</h2>
-          <p className="text-gray-400">{dbStatus}</p>
-          {dbData && (
-            <div className="mt-4 border-t border-gray-700 pt-4">
-              <p className="text-sm text-gray-500">Datos de prueba desde Firestore:</p>
-              <pre className="bg-[#0D0D0D] p-2 rounded text-xs mt-1 overflow-auto text-gray-300">
-                {JSON.stringify(dbData, null, 2)}
-              </pre>
-            </div>
+          <p className={`text-sm ${isConnected ? 'text-emerald-400' : 'text-red-400'}`}>
+            {connectionStatus}
+          </p>
+          {isConnected && (
+            <p className="mt-2 text-xs text-gray-500">
+              El backend está operativo y listo para recibir peticiones.
+            </p>
+          )}
+          {!isConnected && isConnected !== null && (
+            <p className="mt-2 text-xs text-gray-500">
+              Asegúrate de que el backend esté corriendo en <code className="bg-[#0D0D0D] px-1 py-0.5 rounded">http://localhost:3000</code>
+            </p>
           )}
         </div>
       </div>
