@@ -82,7 +82,7 @@ export interface IReview {
 }
 
 // ---------- RESPUESTAS DE API (Estructura común) ----------
-export interface IApiResponse<T = any> {
+export interface IApiResponse<T> {
   success: boolean;
   message?: string;
   data?: T;
@@ -94,8 +94,9 @@ export interface IApiResponse<T = any> {
 export interface IAuthPayload {
   uid: string;
   email: string;
-  role: UserRole;
+  role: UserRole; // 'developer' | 'client' | 'both' | 'admin'
   displayName?: string;
+  photoURL?: string;
 }
 
 export interface ILoginCredentials {
