@@ -52,38 +52,37 @@
 }
 
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
+    --background: oklch(0.95 0.04 210); /* celeste claro */
+    --foreground: oklch(0.25 0.05 160); 
+    --card: oklch(0.98 0.01 210);
+    --card-foreground: oklch(0.25 0.05 160);
+    --popover: oklch(0.98 0.01 210);
+    --popover-foreground: oklch(0.25 0.05 160);
+    --primary: oklch(0.55 0.15 160);   
+    --primary-foreground: oklch(0.98 0 0);
+    --secondary: oklch(0.9 0.02 210);
+    --secondary-foreground: oklch(0.25 0.05 160);
+    --muted: oklch(0.9 0.02 210);
+    --muted-foreground: oklch(0.45 0.03 160);
+    --accent: oklch(0.9 0.05 160);
+    --accent-foreground: oklch(0.25 0.05 160);
+    --destructive: oklch(0.6 0.2 25);
+    --border: oklch(0.8 0.03 210);
+    --input: oklch(0.8 0.03 210);
+    --ring: oklch(0.55 0.15 160);
+    --chart-1: oklch(0.55 0.15 160);
+    --chart-2: oklch(0.7 0.1 210);
+    --chart-3: oklch(0.5 0.1 160);
+    --chart-4: oklch(0.8 0.1 130);
+    --chart-5: oklch(0.9 0.1 100);
+    --sidebar: oklch(0.95 0.04 210);
+    --sidebar-foreground: oklch(0.25 0.05 160);
+    --sidebar-primary: oklch(0.55 0.15 160);
+    --sidebar-primary-foreground: oklch(0.98 0 0);
+    --sidebar-accent: oklch(0.9 0.05 160);
+    --sidebar-accent-foreground: oklch(0.25 0.05 160);
+    --sidebar-border: oklch(0.8 0.03 210);
+    --sidebar-ring: oklch(0.55 0.15 160);
 }
 
 .dark {
@@ -123,11 +122,56 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    }
+  }
   body {
-    @apply bg-background text-foreground;
-    }
+    /* Degradado invertido: Oscuro abajo-derecha -> Celeste claro arriba-izquierda */
+    background: linear-gradient(to top left, #4A90B8 0%, #6BB5D3 50%, #A8D8EA 100%) !important;
+    color: var(--foreground);
+  }
   html {
     @apply font-sans;
-    }
+  }
+}
+
+/* ⚠️ AJUSTES FINALES DE DISEÑO (Fuerza Bruta) */
+:root {
+  --sidebar-margin: 1rem; /* Margen lateral del div verde */
+}
+
+/* Contenedor principal (div verde) - Márgenes laterales más pequeños y estáticos */
+.max-w-3xl {
+  width: 100% !important;
+  max-width: 48rem !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0 !important;
+  border-radius: 1.5rem !important;
+  padding: 2rem !important;
+}
+
+/* DIV INTERNO (fondo más claro) - Separación del div verde */
+.div-interno {
+  background-color: #2A4A3A !important; /* Verde un poco más claro que #1E3A2C */
+  border-radius: 1rem !important;
+  padding: 2rem !important;
+  margin: 0 !important;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.1) !important;
+}
+
+/* Asegurar que los títulos no se corten */
+h1, h2 {
+  overflow-wrap: break-word !important;
+  white-space: normal !important;
+}
+
+/* Ajuste del layout global para el margen estático */
+#root {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  background: linear-gradient(to top left, #4A90B8 0%, #6BB5D3 50%, #A8D8EA 100%) !important;
 }

@@ -1,11 +1,8 @@
-// components/common/Header.tsx
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaBars, FaTimes, FaUser, FaSignInAlt } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
-import { Navbar } from './Navbar';
 
-// Definimos los enlaces principales (todos visibles por ahora)
 const NAV_LINKS = [
   { to: '/', label: 'Inicio' },
   { to: '/developers', label: 'Talentos' },
@@ -17,41 +14,54 @@ const NAV_LINKS = [
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // Mock de autenticación (después lo reemplazaremos con el contexto real)
   const isAuthenticated = false;
+  const navigate = useNavigate();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <header className="border-b border-gray-800 bg-[#1E1E1E] px-4 py-3 md:px-6">
-      <div className="mx-auto flex max-w-7xl items-center justify-between">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-emerald-500">
-          <span>CodeCraft</span>
-        </Link>
+    <header className="sticky top-0 z-50 border-b-2 border-sky-500 bg-sky-300/80 backdrop-blur-md px-4 py-3 md:px-6">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4">
+        
+        {/* Logo como TEXTO clickeable */}
+        <button
+          onClick={() => navigate('/')}
+          className="text-2xl font-bold text-emerald-950 hover:text-emerald-800 transition-colors"
+        >
+          CodeCraft
+        </button>
 
-        {/* Navbar (Desktop) */}
-        <Navbar links={NAV_LINKS} className="hidden md:flex" />
+        {/* Menú con botones suaves (sin fondo, solo texto con hover) */}
+        <nav
+          style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}
+          className="flex-1"
+        >
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className="px-3 py-2 text-sm font-medium text-emerald-950 bg-white/40 rounded-lg hover:bg-white/70 hover:text-emerald-800 transition-all duration-200"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
 
-        {/* Acciones (Desktop) */}
-        <div className="hidden items-center gap-3 md:flex">
+        {/* Acciones de usuario */}
+        <div className="flex items-center gap-3">
           {isAuthenticated ? (
-            <>
-              <Button variant="ghost" size="sm" className="text-gray-300">
-                <FaUser className="mr-2 h-4 w-4" />
-                Mi Perfil
-              </Button>
-            </>
+            <Button variant="ghost" size="sm" className="text-emerald-950">
+              <FaUser className="mr-2 h-4 w-4" /> Mi Perfil
+            </Button>
           ) : (
             <>
               <Link to="/login">
-                <Button variant="ghost" size="sm" className="text-gray-300">
-                  <FaSignInAlt className="mr-2 h-4 w-4" />
-                  Iniciar Sesión
+                <Button variant="ghost" size="sm" className="text-emerald-950 bg-white/40 hover:bg-white/70">
+                  <FaSignInAlt className="mr-2 h-4 w-4" /> Iniciar Sesión
                 </Button>
               </Link>
               <Link to="/register">
-                <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700">
+                <Button size="sm" className="bg-emerald-700 text-white hover:bg-emerald-600">
                   Registrarse
                 </Button>
               </Link>
@@ -59,9 +69,9 @@ export const Header = () => {
           )}
         </div>
 
-        {/* Botón Hamburguesa (Móvil) */}
+        {/* Botón hamburguesa (solo móvil) */}
         <button
-          className="block text-gray-300 transition-colors hover:text-emerald-400 md:hidden"
+          className="block text-emerald-950 md:hidden"
           onClick={toggleMenu}
           aria-label="Abrir menú"
         >
@@ -69,40 +79,30 @@ export const Header = () => {
         </button>
       </div>
 
-      {/* Menú Móvil */}
+      {/* Menú móvil desplegable */}
       {isMenuOpen && (
-        <div className="mt-4 flex flex-col gap-4 border-t border-gray-700 pt-4 md:hidden">
+        <div className="mt-4 flex flex-col gap-2 border-t border-sky-500 pt-4 md:hidden">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.to}
               to={link.to}
-              className="text-gray-300 transition-colors hover:text-emerald-400"
+              className="px-3 py-2 text-sm font-medium text-emerald-950 bg-white/40 rounded-lg hover:bg-white/70"
               onClick={() => setIsMenuOpen(false)}
             >
               {link.label}
             </Link>
           ))}
-          <hr className="border-gray-700" />
-          {isAuthenticated ? (
-            <Button variant="ghost" size="sm" className="w-full justify-start text-gray-300">
-              <FaUser className="mr-2 h-4 w-4" />
-              Mi Perfil
+          <hr className="border-sky-500" />
+          <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+            <Button variant="ghost" size="sm" className="w-full justify-start text-emerald-950 bg-white/40">
+              <FaSignInAlt className="mr-2 h-4 w-4" /> Iniciar Sesión
             </Button>
-          ) : (
-            <>
-              <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" size="sm" className="w-full justify-start text-gray-300">
-                  <FaSignInAlt className="mr-2 h-4 w-4" />
-                  Iniciar Sesión
-                </Button>
-              </Link>
-              <Link to="/register" onClick={() => setIsMenuOpen(false)}>
-                <Button size="sm" className="w-full bg-emerald-600 hover:bg-emerald-700">
-                  Registrarse
-                </Button>
-              </Link>
-            </>
-          )}
+          </Link>
+          <Link to="/register" onClick={() => setIsMenuOpen(false)}>
+            <Button size="sm" className="w-full bg-emerald-700 text-white">
+              Registrarse
+            </Button>
+          </Link>
         </div>
       )}
     </header>

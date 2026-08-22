@@ -12,12 +12,12 @@ interface NavbarProps {
 
 export const Navbar = ({ links, className = '' }: NavbarProps) => {
   return (
-    <nav className={`flex items-center gap-6 text-sm font-medium ${className}`}>
+    <nav className={`flex items-center gap-3 text-sm font-medium ${className}`}>
       {links.map((link) => (
         <Link
           key={link.to}
           to={link.to}
-          className="text-gray-300 transition-colors hover:text-emerald-400"
+          className="px-3 py-2 text-emerald-950 bg-white/40 rounded-lg hover:bg-white/70 hover:text-emerald-800 transition-all duration-200"
         >
           {link.label}
         </Link>

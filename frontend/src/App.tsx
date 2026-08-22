@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { MainLayout } from '@/layouts/MainLayout';
+import { AuthLayout } from '@/layouts/AuthLayout';
 import { HomePage } from '@/pages/HomePage';
 import { DevelopersPage } from '@/pages/DevelopersPage';
 import { DeveloperProfilePage } from '@/pages/DeveloperProfilePage';
@@ -11,13 +12,11 @@ import { ProfilePage } from '@/pages/ProfilePage';
 import { LoginPage } from '@/pages/LoginPage';
 import { RegisterPage } from '@/pages/RegisterPage';
 
-
-// Importaremos más páginas después (Login, Register, etc.)
-
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Rutas con layout principal (con Navbar y Footer) */}
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
           <Route path="developers" element={<DevelopersPage />} />
@@ -27,6 +26,10 @@ function App() {
           <Route path="projects/new" element={<CreateProjectPage />} />
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="profile" element={<ProfilePage />} />
+        </Route>
+
+        {/* Rutas de autenticación (sin Navbar, con Footer) */}
+        <Route path="/" element={<AuthLayout />}>
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
         </Route>
